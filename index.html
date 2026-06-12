@@ -1,0 +1,1744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 17 — Grammar | ScholarNest</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0A1628;
+    --slate: #1E3A5F;
+    --slate-light: #2D5A8E;
+    --gold: #F5A623;
+    --gold-light: #FBBF24;
+    --mint: #4ECDC4;
+    --mint-light: #7EDDD6;
+    --rose: #E07A5F;
+    --lavender: #9B8EC4;
+    --text: #E8F4FD;
+    --text-muted: #94B4CC;
+    --bg-card: rgba(30, 58, 95, 0.5);
+    --bg-card-hover: rgba(45, 90, 142, 0.6);
+    --border: rgba(78, 205, 196, 0.2);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--navy);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ========== SIDEBAR ========== */
+  .sidebar {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 260px;
+    background: linear-gradient(180deg, #0D1E35 0%, #0A1628 100%);
+    border-right: 1px solid var(--border);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding: 0 0 24px;
+  }
+
+  .sidebar-logo {
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo-icon {
+    width: 42px; height: 42px;
+    background: linear-gradient(135deg, var(--gold) 0%, #E8941A 100%);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(245, 166, 35, 0.3);
+  }
+
+  .logo-text { display: flex; flex-direction: column; }
+  .logo-text .brand { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 16px; color: var(--gold); letter-spacing: 0.02em; }
+  .logo-text .tagline { font-size: 10px; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; }
+
+  .chapter-badge {
+    margin: 16px 20px 8px;
+    background: linear-gradient(135deg, var(--slate) 0%, var(--slate-light) 100%);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 600;
+    border: 1px solid var(--border);
+  }
+  .chapter-badge span { display: block; font-family: 'Playfair Display', serif; font-size: 14px; color: var(--text); text-transform: none; letter-spacing: 0; margin-top: 2px; font-weight: 600; }
+
+  .nav-section { margin-top: 8px; }
+  .nav-label { padding: 10px 20px 4px; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); font-weight: 700; }
+
+  .nav-link {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 20px;
+    font-size: 13px; color: var(--text-muted);
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .nav-link:hover, .nav-link.active {
+    color: var(--text);
+    background: var(--bg-card);
+    border-left-color: var(--mint);
+  }
+  .nav-link .nav-icon { font-size: 15px; flex-shrink: 0; }
+  .nav-link .nav-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text-muted); flex-shrink: 0; }
+  .nav-link:hover .nav-dot, .nav-link.active .nav-dot { background: var(--mint); }
+
+  /* ========== MAIN ========== */
+  .main {
+    margin-left: 260px;
+    min-height: 100vh;
+  }
+
+  /* ========== HERO ========== */
+  .hero {
+    background: linear-gradient(135deg, #0D2444 0%, #0A1628 50%, #0D1E35 100%);
+    padding: 60px 60px 50px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(245,166,35,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: 30%;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(78,205,196,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mint); font-weight: 700; margin-bottom: 12px; }
+  .hero-title { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 900; line-height: 1.1; color: var(--text); margin-bottom: 16px; }
+  .hero-title em { font-style: normal; color: var(--gold); }
+  .hero-sub { font-size: 16px; color: var(--text-muted); max-width: 560px; line-height: 1.7; margin-bottom: 32px; }
+
+  .hero-stats {
+    display: flex; gap: 32px; flex-wrap: wrap;
+  }
+  .hero-stat { display: flex; flex-direction: column; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--gold); }
+  .stat-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
+
+  /* ========== SECTIONS ========== */
+  .content { padding: 48px 60px; }
+
+  .section { margin-bottom: 64px; scroll-margin-top: 80px; }
+  .section-header {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-letter {
+    width: 44px; height: 44px;
+    background: linear-gradient(135deg, var(--slate) 0%, var(--slate-light) 100%);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700; font-size: 18px;
+    color: var(--gold);
+    border: 1px solid rgba(245,166,35,0.2);
+    flex-shrink: 0;
+  }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--text); }
+  .section-subtitle { font-size: 13px; color: var(--text-muted); margin-top: 3px; }
+
+  /* ========== CARDS ========== */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 16px;
+    transition: all 0.25s;
+  }
+  .card:hover { background: var(--bg-card-hover); border-color: rgba(78,205,196,0.3); }
+
+  .card-title {
+    font-weight: 600; font-size: 15px;
+    color: var(--mint);
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card-body { font-size: 14px; color: var(--text-muted); line-height: 1.75; }
+  .card-body strong { color: var(--text); }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+  /* ========== RULE LIST ========== */
+  .rule-list { list-style: none; }
+  .rule-list li {
+    display: flex; gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(78,205,196,0.08);
+    font-size: 14px; color: var(--text-muted); line-height: 1.6;
+  }
+  .rule-list li:last-child { border-bottom: none; }
+  .rule-num {
+    flex-shrink: 0;
+    width: 24px; height: 24px;
+    background: linear-gradient(135deg, var(--mint) 0%, var(--mint-light) 100%);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: var(--navy);
+    margin-top: 1px;
+  }
+
+  /* ========== EXAMPLE BOXES ========== */
+  .example-box {
+    background: rgba(10, 22, 40, 0.8);
+    border: 1px solid rgba(245,166,35,0.2);
+    border-left: 3px solid var(--gold);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 10px 0;
+    font-size: 13.5px;
+  }
+  .example-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 6px; }
+  .example-text { color: var(--text); font-style: italic; line-height: 1.6; }
+  .example-result { color: var(--mint); margin-top: 6px; font-style: normal; }
+
+  .direct-box {
+    border-left-color: var(--rose);
+  }
+  .indirect-box {
+    border-left-color: var(--mint);
+  }
+  .example-box.direct-box .example-label { color: var(--rose); }
+
+  /* ========== TABLE ========== */
+  .change-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    margin: 16px 0;
+  }
+  .change-table th {
+    background: linear-gradient(135deg, var(--slate) 0%, var(--slate-light) 100%);
+    color: var(--gold);
+    padding: 10px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .change-table th:first-child { border-radius: 8px 0 0 8px; }
+  .change-table th:last-child { border-radius: 0 8px 8px 0; }
+  .change-table td {
+    padding: 9px 16px;
+    color: var(--text-muted);
+    border-bottom: 1px solid rgba(78,205,196,0.07);
+  }
+  .change-table tr:hover td { background: rgba(30,58,95,0.3); color: var(--text); }
+  .change-table td:first-child { color: var(--rose); font-family: 'JetBrains Mono', monospace; }
+  .change-table td:last-child { color: var(--mint); font-family: 'JetBrains Mono', monospace; }
+  .change-table td:nth-child(2) { color: var(--text); font-style: italic; }
+
+  /* ========== DIAGRAM SVG ========== */
+  .diagram-wrap {
+    background: rgba(10, 22, 40, 0.6);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0;
+    text-align: center;
+    overflow-x: auto;
+  }
+  .diagram-caption {
+    font-size: 12px; color: var(--text-muted);
+    margin-top: 12px;
+    text-align: center;
+    letter-spacing: 0.04em;
+  }
+
+  /* ========== HIGHLIGHT PILL ========== */
+  .pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin: 2px;
+  }
+  .pill-gold { background: rgba(245,166,35,0.15); color: var(--gold); border: 1px solid rgba(245,166,35,0.3); }
+  .pill-mint { background: rgba(78,205,196,0.12); color: var(--mint); border: 1px solid rgba(78,205,196,0.3); }
+  .pill-rose { background: rgba(224,122,95,0.12); color: var(--rose); border: 1px solid rgba(224,122,95,0.3); }
+  .pill-lav { background: rgba(155,142,196,0.12); color: var(--lavender); border: 1px solid rgba(155,142,196,0.3); }
+
+  /* ========== WORD TABLE ========== */
+  .word-table { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
+  .word-pair {
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(10,22,40,0.6);
+    border-radius: 6px;
+    padding: 7px 14px;
+    font-size: 13px;
+    border: 1px solid rgba(78,205,196,0.08);
+  }
+  .word-pair .from { color: var(--rose); font-family: 'JetBrains Mono', monospace; }
+  .word-pair .arrow { color: var(--text-muted); font-size: 12px; }
+  .word-pair .to { color: var(--mint); font-family: 'JetBrains Mono', monospace; }
+
+  /* ========== VOICE TABLE ========== */
+  .voice-conditions { counter-reset: vc; }
+  .voice-conditions li::before {
+    counter-increment: vc;
+    content: counter(vc) ".";
+    color: var(--gold);
+    font-weight: 700;
+    margin-right: 8px;
+  }
+
+  /* ========== DEGREE COMPARISON ========== */
+  .degree-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+  .degree-card {
+    background: rgba(10,22,40,0.7);
+    border-radius: 10px;
+    padding: 16px;
+    border: 1px solid var(--border);
+    text-align: center;
+  }
+  .degree-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; margin-bottom: 8px; }
+  .degree-ex { font-style: italic; font-size: 13.5px; line-height: 1.6; }
+
+  /* ========== MODAL TABLE ========== */
+  .modal-section { margin-bottom: 24px; }
+  .modal-header {
+    font-size: 18px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 12px;
+    padding: 8px 16px;
+    background: rgba(245,166,35,0.08);
+    border-radius: 8px;
+    border-left: 3px solid var(--gold);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .modal-uses { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .modal-use {
+    background: rgba(10,22,40,0.6);
+    border-radius: 8px;
+    padding: 10px 14px;
+    border: 1px solid rgba(78,205,196,0.08);
+  }
+  .modal-use-label { font-size: 11px; color: var(--mint); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px; }
+  .modal-use-ex { font-size: 13px; color: var(--text-muted); font-style: italic; }
+
+  /* ========== ONE-WORD SUBS ========== */
+  .ows-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 12px; }
+  .ows-item {
+    display: flex; align-items: baseline;
+    gap: 8px;
+    padding: 7px 12px;
+    background: rgba(10,22,40,0.5);
+    border-radius: 6px;
+    border: 1px solid rgba(78,205,196,0.06);
+    font-size: 12.5px;
+  }
+  .ows-item:hover { background: rgba(30,58,95,0.5); border-color: rgba(78,205,196,0.2); }
+  .ows-phrase { color: var(--text-muted); flex: 1; line-height: 1.5; }
+  .ows-word { color: var(--gold); font-weight: 600; white-space: nowrap; flex-shrink: 0; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+
+  /* ========== HOMONYMS ========== */
+  .homo-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; }
+  .homo-pair {
+    background: rgba(10,22,40,0.6);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    color: var(--mint);
+    border: 1px solid rgba(78,205,196,0.1);
+    transition: all 0.2s;
+  }
+  .homo-pair:hover { background: rgba(30,58,95,0.6); color: var(--gold); }
+
+  /* ========== ABBREVIATIONS ========== */
+  .abbr-table { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; align-items: baseline; }
+  .abbr-key { font-family: 'JetBrains Mono', monospace; color: var(--gold); font-size: 13px; font-weight: 600; padding: 5px 0; }
+  .abbr-val { color: var(--text-muted); font-size: 13px; padding: 5px 0; border-bottom: 1px solid rgba(78,205,196,0.05); }
+
+  /* ========== FOREIGN EXPRESSIONS ========== */
+  .foreign-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 10px;
+    transition: all 0.2s;
+  }
+  .foreign-item:hover { background: var(--bg-card-hover); }
+  .foreign-term { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--gold); margin-bottom: 4px; }
+  .foreign-lang { font-size: 11px; color: var(--mint); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+  .foreign-def { font-size: 13.5px; color: var(--text-muted); line-height: 1.65; margin-top: 6px; }
+  .foreign-def em { color: var(--lavender); font-style: italic; }
+
+  /* ========== TECH TERMS ========== */
+  .tech-item {
+    padding: 14px 18px;
+    border-bottom: 1px solid rgba(78,205,196,0.07);
+    transition: all 0.2s;
+  }
+  .tech-item:hover { background: rgba(30,58,95,0.2); padding-left: 24px; }
+  .tech-term { font-weight: 700; color: var(--text); font-size: 14px; }
+  .tech-field { font-size: 10.5px; color: var(--lavender); text-transform: uppercase; letter-spacing: 0.08em; margin-left: 8px; }
+  .tech-def { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-top: 4px; }
+
+  /* ========== PARTS OF SPEECH ========== */
+  .pos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .pos-card {
+    background: rgba(10,22,40,0.6);
+    border-radius: 10px;
+    padding: 14px;
+    border: 1px solid var(--border);
+  }
+  .pos-word { font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 700; color: var(--gold); margin-bottom: 10px; }
+  .pos-usage { font-size: 12px; line-height: 1.7; }
+  .pos-tag { color: var(--lavender); font-style: italic; font-size: 11px; }
+  .pos-ex { color: var(--text-muted); }
+
+  /* ========== TOC ========== */
+  .toc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .toc-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px;
+    background: rgba(10,22,40,0.5);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 13px;
+    transition: all 0.2s;
+  }
+  .toc-item:hover { background: var(--bg-card); color: var(--text); border-color: rgba(78,205,196,0.3); }
+  .toc-icon { font-size: 18px; }
+  .toc-label { font-weight: 500; }
+  .toc-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); }
+
+  /* ========== SCROLL PROGRESS ========== */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 260px; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--mint) 100%);
+    transform-origin: left;
+    transform: scaleX(0);
+    z-index: 200;
+    transition: transform 0.1s linear;
+  }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; }
+    .progress-bar { left: 0; }
+    .hero { padding: 40px 24px; }
+    .content { padding: 32px 24px; }
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .hero-title { font-size: 36px; }
+    .toc-grid { grid-template-columns: 1fr; }
+    .homo-grid { grid-template-columns: repeat(2,1fr); }
+  }
+
+  /* ========== SECTION DIVIDER ========== */
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 48px 0;
+  }
+
+  /* ========== PHONETICS ========== */
+  .phoneme-box {
+    background: rgba(10,22,40,0.7);
+    border: 1px solid rgba(155,142,196,0.3);
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--lavender);
+    margin: 12px 0;
+    line-height: 1.8;
+  }
+
+  /* ========== NARRATION FLOW DIAGRAM ========== */
+  .flow-container { overflow-x: auto; padding: 8px 0; }
+
+  /* ========== SOLVED EXAMPLES ========== */
+  .solved-list { list-style: none; counter-reset: ex; }
+  .solved-item {
+    counter-increment: ex;
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(78,205,196,0.07);
+  }
+  .solved-item::before {
+    content: counter(ex) ". ";
+    color: var(--gold);
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+  }
+  .solved-direct { font-style: italic; color: var(--text-muted); font-size: 13.5px; }
+  .solved-indirect { font-size: 13.5px; color: var(--mint); margin-top: 5px; padding-left: 20px; }
+  .solved-indirect::before { content: "→ "; font-style: normal; }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon">🎓</div>
+    <div class="logo-text">
+      <span class="brand">ScholarNest</span>
+      <span class="tagline">Learn · Grow · Excel</span>
+    </div>
+  </div>
+
+  <div class="chapter-badge">Chapter 17<span>Grammar</span></div>
+
+  <div class="nav-section">
+    <div class="nav-label">Topics</div>
+    <a class="nav-link" href="#overview"><span class="nav-dot"></span>Overview</a>
+    <a class="nav-link" href="#narration"><span class="nav-dot"></span>Direct &amp; Indirect Speech</a>
+    <a class="nav-link" href="#adverb-too"><span class="nav-dot"></span>Adverb <em>too</em></a>
+    <a class="nav-link" href="#conditions"><span class="nav-dot"></span>Conditions</a>
+    <a class="nav-link" href="#contrasting"><span class="nav-dot"></span>Contrasting Sentences</a>
+    <a class="nav-link" href="#degree"><span class="nav-dot"></span>Degree of Comparison</a>
+    <a class="nav-link" href="#voice"><span class="nav-dot"></span>Active &amp; Passive Voice</a>
+    <a class="nav-link" href="#sentence-types"><span class="nav-dot"></span>Sentence Types</a>
+    <a class="nav-link" href="#parts-speech"><span class="nav-dot"></span>Words &amp; Parts of Speech</a>
+    <a class="nav-link" href="#homonyms"><span class="nav-dot"></span>Homonyms &amp; Homophones</a>
+    <a class="nav-link" href="#one-word"><span class="nav-dot"></span>One-Word Substitution</a>
+    <a class="nav-link" href="#foreign"><span class="nav-dot"></span>Foreign Expressions</a>
+    <a class="nav-link" href="#abbreviations"><span class="nav-dot"></span>Abbreviations</a>
+    <a class="nav-link" href="#modals"><span class="nav-dot"></span>Modals</a>
+    <a class="nav-link" href="#phonetics"><span class="nav-dot"></span>Phonetic Transcription</a>
+    <a class="nav-link" href="#technical"><span class="nav-dot"></span>Technical Terms</a>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-eyebrow">ScholarNest · Communication Skills</div>
+    <h1 class="hero-title">Chapter 17<br><em>Grammar</em></h1>
+    <p class="hero-sub">A complete visual guide to transformation of sentences, narration, voice, modals, one-word substitutions, foreign expressions, abbreviations, and phonetics.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="stat-num">17</span><span class="stat-label">Major Topics</span></div>
+      <div class="hero-stat"><span class="stat-num">200+</span><span class="stat-label">One-Word Subs</span></div>
+      <div class="hero-stat"><span class="stat-num">150+</span><span class="stat-label">Homophones</span></div>
+      <div class="hero-stat"><span class="stat-num">11</span><span class="stat-label">Modal Verbs</span></div>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- OVERVIEW -->
+    <section class="section" id="overview">
+      <div class="section-header">
+        <div class="section-letter">📖</div>
+        <div>
+          <div class="section-title">Overview: Transformation of Sentences</div>
+          <div class="section-subtitle">17.1 — Core Concept</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">When a sentence is changed from one grammatical form to another <strong>without changing its meaning</strong>, it is called <strong>Transformation of Sentence</strong>. This is the natural habit of human communication — an attempt to know the procedures by which a sentence is re-expressed while keeping its meaning intact.</div>
+      </div>
+      <div class="toc-grid" style="margin-top:20px;">
+        <a href="#narration" class="toc-item"><span class="toc-icon">💬</span><div><div class="toc-label">Direct &amp; Indirect Speech</div><div class="toc-num">Part A</div></div></a>
+        <a href="#adverb-too" class="toc-item"><span class="toc-icon">📝</span><div><div class="toc-label">Adverb <em>too</em></div><div class="toc-num">Part B</div></div></a>
+        <a href="#conditions" class="toc-item"><span class="toc-icon">🔀</span><div><div class="toc-label">Modes of Condition</div><div class="toc-num">Part C</div></div></a>
+        <a href="#contrasting" class="toc-item"><span class="toc-icon">⚖️</span><div><div class="toc-label">Contrasting Sentences</div><div class="toc-num">Part D</div></div></a>
+        <a href="#degree" class="toc-item"><span class="toc-icon">📊</span><div><div class="toc-label">Degree of Comparison</div><div class="toc-num">Part E</div></div></a>
+        <a href="#voice" class="toc-item"><span class="toc-icon">🔄</span><div><div class="toc-label">Active-Passive Voice</div><div class="toc-num">Part F</div></div></a>
+        <a href="#sentence-types" class="toc-item"><span class="toc-icon">🏗️</span><div><div class="toc-label">Sentence Types</div><div class="toc-num">Part J</div></div></a>
+        <a href="#modals" class="toc-item"><span class="toc-icon">🧩</span><div><div class="toc-label">Modals</div><div class="toc-num">Section</div></div></a>
+      </div>
+    </section>
+
+    <!-- NARRATION -->
+    <section class="section" id="narration">
+      <div class="section-header">
+        <div class="section-letter">A</div>
+        <div>
+          <div class="section-title">Direct &amp; Indirect Speech</div>
+          <div class="section-subtitle">Narration — the most tested transformation</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">💬 Direct Speech</div>
+          <div class="card-body">Reproduces the <strong>actual words</strong> of the speaker in quotation marks.<br><br>
+          <span class="pill pill-rose">Reporting Verb</span> + <span class="pill pill-mint">"Reported Speech"</span></div>
+          <div class="example-box direct-box" style="margin-top:12px;">
+            <div class="example-label">Example</div>
+            <div class="example-text">He said, <strong>"I want to go to a picnic."</strong></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">📝 Indirect Speech</div>
+          <div class="card-body">Gives the <strong>substance</strong> of the speaker's words — no quotation marks, joined by "that".<br><br>
+          <span class="pill pill-rose">Reporting Verb</span> <span class="pill pill-gold">that</span> <span class="pill pill-mint">Reported Speech</span></div>
+          <div class="example-box indirect-box" style="margin-top:12px;">
+            <div class="example-label">Example</div>
+            <div class="example-text">He said <strong>that he wanted to go to a picnic.</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Diagram: Narration Flow -->
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 700 200" width="100%" style="max-width:680px;" xmlns="http://www.w3.org/2000/svg">
+          <!-- Background -->
+          <rect x="0" y="0" width="700" height="200" fill="none"/>
+          <!-- Direct Speech Box -->
+          <rect x="20" y="60" width="200" height="80" rx="10" fill="#1E3A5F" stroke="#E07A5F" stroke-width="1.5"/>
+          <text x="120" y="93" font-family="Playfair Display, serif" font-size="14" fill="#E07A5F" text-anchor="middle" font-weight="700">DIRECT SPEECH</text>
+          <text x="120" y="112" font-family="Inter, sans-serif" font-size="11" fill="#94B4CC" text-anchor="middle">Actual words</text>
+          <text x="120" y="128" font-family="Inter, sans-serif" font-size="11" fill="#94B4CC" text-anchor="middle">Quotation marks used</text>
+
+          <!-- Arrow -->
+          <path d="M230 100 L320 100" stroke="#F5A623" stroke-width="2" stroke-dasharray="5,4"/>
+          <polygon points="320,95 332,100 320,105" fill="#F5A623"/>
+          <text x="280" y="88" font-family="Inter, sans-serif" font-size="10" fill="#F5A623" text-anchor="middle">Transform</text>
+
+          <!-- Indirect Speech Box -->
+          <rect x="340" y="60" width="200" height="80" rx="10" fill="#1E3A5F" stroke="#4ECDC4" stroke-width="1.5"/>
+          <text x="440" y="93" font-family="Playfair Display, serif" font-size="14" fill="#4ECDC4" text-anchor="middle" font-weight="700">INDIRECT SPEECH</text>
+          <text x="440" y="112" font-family="Inter, sans-serif" font-size="11" fill="#94B4CC" text-anchor="middle">Substance of words</text>
+          <text x="440" y="128" font-family="Inter, sans-serif" font-size="11" fill="#94B4CC" text-anchor="middle">Joined by "that"</text>
+
+          <!-- Rules label -->
+          <text x="350" y="30" font-family="Inter, sans-serif" font-size="12" fill="#94B4CC" text-anchor="middle">Tense, Pronoun &amp; Word Changes Applied →</text>
+          <line x1="230" y1="35" x2="340" y2="35" stroke="#94B4CC" stroke-width="1" stroke-dasharray="3,3"/>
+
+          <!-- Reporting Verb Note -->
+          <rect x="555" y="60" width="130" height="80" rx="8" fill="rgba(10,22,40,0.7)" stroke="rgba(78,205,196,0.2)" stroke-width="1"/>
+          <text x="620" y="88" font-family="Inter, sans-serif" font-size="11" fill="#9B8EC4" text-anchor="middle" font-weight="600">REPORTING VERB</text>
+          <text x="620" y="106" font-family="Inter, sans-serif" font-size="10" fill="#94B4CC" text-anchor="middle">say/tell → ask</text>
+          <text x="620" y="122" font-family="Inter, sans-serif" font-size="10" fill="#94B4CC" text-anchor="middle">(interrogative)</text>
+          <text x="620" y="138" font-family="Inter, sans-serif" font-size="10" fill="#94B4CC" text-anchor="middle">(imperative)</text>
+        </svg>
+        <div class="diagram-caption">Narration transformation flow: Direct → Indirect Speech</div>
+      </div>
+
+      <div class="card" style="margin-top:20px;">
+        <div class="card-title">📋 Rules for Transformation (Direct → Indirect)</div>
+        <ul class="rule-list">
+          <li><span class="rule-num">i</span>The reporting verb and reported speech are joined by <strong>"that"</strong>.</li>
+          <li><span class="rule-num">ii</span>The tense of the <strong>reporting verb remains the same</strong>.</li>
+          <li><span class="rule-num">iii</span>If the reporting verb is in <strong>present or future tense</strong>, the tense of reported speech does <em>not</em> change.</li>
+          <li><span class="rule-num">iv</span>If the reporting verb is in <strong>past tense</strong>, specific tense changes apply (see table below).</li>
+          <li><span class="rule-num">v</span>For <strong>universal truths</strong>, the Present Indefinite is always used.</li>
+          <li><span class="rule-num">vi</span>Adjectives/adverbs of <strong>nearness</strong> change to those of <strong>distance</strong>.</li>
+          <li><span class="rule-num">vii</span>For <strong>interrogative sentences</strong>, reporting verb changes to <em>ask/inquire</em>.</li>
+          <li><span class="rule-num">viii</span>For <strong>imperative sentences</strong>, reporting verb changes to a word signifying command, precept, or entreaty.</li>
+        </ul>
+      </div>
+
+      <h3 style="font-family:'Playfair Display',serif;font-size:18px;color:var(--text);margin:24px 0 12px;">Tense Changes (when Reporting Verb is Past Tense)</h3>
+      <table class="change-table">
+        <thead><tr><th>Direct (Present)</th><th>Indirect (Past)</th></tr></thead>
+        <tbody>
+          <tr><td>is</td><td>was</td></tr>
+          <tr><td>is coming</td><td>was coming</td></tr>
+          <tr><td>shall</td><td>should</td></tr>
+          <tr><td>will</td><td>would</td></tr>
+          <tr><td>may</td><td>might</td></tr>
+          <tr><td>can</td><td>could</td></tr>
+          <tr><td>come</td><td>came</td></tr>
+          <tr><td>has come</td><td>had come</td></tr>
+          <tr><td>has been coming</td><td>had been coming</td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="font-family:'Playfair Display',serif;font-size:18px;color:var(--text);margin:24px 0 12px;">Word Changes (Nearness → Distance)</h3>
+      <div class="word-table">
+        <div class="word-pair"><span class="from">it</span><span class="arrow">→</span><span class="to">that</span></div>
+        <div class="word-pair"><span class="from">here</span><span class="arrow">→</span><span class="to">there</span></div>
+        <div class="word-pair"><span class="from">now</span><span class="arrow">→</span><span class="to">then</span></div>
+        <div class="word-pair"><span class="from">this/these</span><span class="arrow">→</span><span class="to">that/those</span></div>
+        <div class="word-pair"><span class="from">Hither</span><span class="arrow">→</span><span class="to">thither</span></div>
+        <div class="word-pair"><span class="from">Hence</span><span class="arrow">→</span><span class="to">thence</span></div>
+        <div class="word-pair"><span class="from">Ago</span><span class="arrow">→</span><span class="to">before</span></div>
+        <div class="word-pair"><span class="from">Thus</span><span class="arrow">→</span><span class="to">so</span></div>
+        <div class="word-pair"><span class="from">Come</span><span class="arrow">→</span><span class="to">go</span></div>
+        <div class="word-pair"><span class="from">Today</span><span class="arrow">→</span><span class="to">that day</span></div>
+        <div class="word-pair"><span class="from">Tomorrow</span><span class="arrow">→</span><span class="to">next day</span></div>
+        <div class="word-pair"><span class="from">Yesterday</span><span class="arrow">→</span><span class="to">the previous day</span></div>
+        <div class="word-pair"><span class="from">Last night</span><span class="arrow">→</span><span class="to">the previous night</span></div>
+      </div>
+
+      <h3 style="font-family:'Playfair Display',serif;font-size:18px;color:var(--text);margin:28px 0 12px;">Solved Examples</h3>
+      <ul class="solved-list">
+        <li class="solved-item">
+          <div class="solved-direct">The policeman said to Atul, "This road leads to the station."</div>
+          <div class="solved-indirect">The policeman told Atul that road led to the station.</div>
+        </li>
+        <li class="solved-item">
+          <div class="solved-direct">Mother said to Anju, "I am going to the market."</div>
+          <div class="solved-indirect">Mother told Anju that she was going to the market.</div>
+        </li>
+        <li class="solved-item">
+          <div class="solved-direct">Ajit said, "Mohit plays cricket."</div>
+          <div class="solved-indirect">Ajit said that Mohit played cricket.</div>
+        </li>
+        <li class="solved-item">
+          <div class="solved-direct">Rama said, "Father may reach in the evening."</div>
+          <div class="solved-indirect">Rama said that father might reach in the evening.</div>
+        </li>
+        <li class="solved-item">
+          <div class="solved-direct">He said to me, "Have you heard this news?"</div>
+          <div class="solved-indirect">He asked me whether I had heard that news. <span class="pill pill-lav">Interrogative</span></div>
+        </li>
+        <li class="solved-item">
+          <div class="solved-direct">She said to her brother, "Work hard."</div>
+          <div class="solved-indirect">She advised her brother to work hard. <span class="pill pill-rose">Imperative</span></div>
+        </li>
+        <li class="solved-item">
+          <div class="solved-direct">The General said, "March forward, my soldiers."</div>
+          <div class="solved-indirect">The General commanded his soldiers to march forward. <span class="pill pill-rose">Command</span></div>
+        </li>
+        <li class="solved-item">
+          <div class="solved-direct">"Oh! What a fool I have been", he said.</div>
+          <div class="solved-indirect">He exclaimed with regret that he had been a fool. <span class="pill pill-lav">Exclamatory</span></div>
+        </li>
+      </ul>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ADVERB TOO -->
+    <section class="section" id="adverb-too">
+      <div class="section-header">
+        <div class="section-letter">B</div>
+        <div>
+          <div class="section-title">Transformation: Adverb <em>too</em></div>
+          <div class="section-subtitle">Converting "too…to" into "so…that"</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="example-box">
+          <div class="example-label">Pattern 1 — too…to → so…that…couldn't</div>
+          <div class="example-text">He reached the Bus station <strong>too late</strong> to catch the bus.</div>
+          <div class="example-result">He reached the Bus station <strong>so late that</strong> he couldn't catch the bus.</div>
+        </div>
+        <div class="example-box">
+          <div class="example-label">Pattern 2 — too good to be true → so good that it cannot be true</div>
+          <div class="example-text">This news is <strong>too good</strong> to be true.</div>
+          <div class="example-result">This news is <strong>so good that</strong> it cannot be true.</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- CONDITIONS -->
+    <section class="section" id="conditions">
+      <div class="section-header">
+        <div class="section-letter">C</div>
+        <div>
+          <div class="section-title">Modes of Expressing a Condition</div>
+          <div class="section-subtitle">Different ways to express the same conditional meaning</div>
+        </div>
+      </div>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 680 200" width="100%" style="max-width:650px;" xmlns="http://www.w3.org/2000/svg">
+          <text x="340" y="25" font-family="Playfair Display,serif" font-size="15" fill="#F5A623" text-anchor="middle" font-weight="700">Conditional Sentence Variations</text>
+          <!-- Box 1 -->
+          <rect x="20" y="45" width="190" height="130" rx="10" fill="#1E3A5F" stroke="rgba(78,205,196,0.3)" stroke-width="1.2"/>
+          <text x="115" y="70" font-family="Inter,sans-serif" font-size="11" fill="#4ECDC4" text-anchor="middle" font-weight="600">HYPOTHETICAL</text>
+          <text x="115" y="92" font-family="Inter,sans-serif" font-size="11" fill="#94B4CC" text-anchor="middle">I would do this,</text>
+          <text x="115" y="108" font-family="Inter,sans-serif" font-size="11" fill="#94B4CC" text-anchor="middle">if you allowed me.</text>
+          <line x1="40" y1="120" x2="190" y2="120" stroke="rgba(78,205,196,0.15)" stroke-width="1"/>
+          <text x="115" y="138" font-family="Inter,sans-serif" font-size="11" fill="#E8F4FD" text-anchor="middle">I will do this,</text>
+          <text x="115" y="154" font-family="Inter,sans-serif" font-size="11" fill="#E8F4FD" text-anchor="middle">if you allow me.</text>
+          <text x="115" y="170" font-family="Inter,sans-serif" font-size="11" fill="#E07A5F" text-anchor="middle">…unless you allow me.</text>
+          <!-- Box 2 -->
+          <rect x="245" y="45" width="190" height="130" rx="10" fill="#1E3A5F" stroke="rgba(245,166,35,0.3)" stroke-width="1.2"/>
+          <text x="340" y="70" font-family="Inter,sans-serif" font-size="11" fill="#F5A623" text-anchor="middle" font-weight="600">INVERSION</text>
+          <text x="340" y="92" font-family="Inter,sans-serif" font-size="11" fill="#94B4CC" text-anchor="middle">Should he meet me,</text>
+          <text x="340" y="108" font-family="Inter,sans-serif" font-size="11" fill="#94B4CC" text-anchor="middle">he would know me.</text>
+          <line x1="265" y1="120" x2="415" y2="120" stroke="rgba(245,166,35,0.15)" stroke-width="1"/>
+          <text x="340" y="138" font-family="Inter,sans-serif" font-size="11" fill="#E8F4FD" text-anchor="middle">Had he met me,</text>
+          <text x="340" y="154" font-family="Inter,sans-serif" font-size="11" fill="#E8F4FD" text-anchor="middle">he would have known me.</text>
+          <!-- Box 3 -->
+          <rect x="470" y="45" width="190" height="130" rx="10" fill="#1E3A5F" stroke="rgba(224,122,95,0.3)" stroke-width="1.2"/>
+          <text x="565" y="70" font-family="Inter,sans-serif" font-size="11" fill="#E07A5F" text-anchor="middle" font-weight="600">IF CLAUSE</text>
+          <text x="565" y="92" font-family="Inter,sans-serif" font-size="11" fill="#94B4CC" text-anchor="middle">If he had met,</text>
+          <text x="565" y="108" font-family="Inter,sans-serif" font-size="11" fill="#94B4CC" text-anchor="middle">he would have known me.</text>
+          <line x1="490" y1="120" x2="640" y2="120" stroke="rgba(224,122,95,0.15)" stroke-width="1"/>
+          <text x="565" y="138" font-family="Inter,sans-serif" font-size="11" fill="#E8F4FD" text-anchor="middle">If he were to see me,</text>
+          <text x="565" y="154" font-family="Inter,sans-serif" font-size="11" fill="#E8F4FD" text-anchor="middle">he would know me</text>
+          <text x="565" y="170" font-family="Inter,sans-serif" font-size="11" fill="#E8F4FD" text-anchor="middle">at once.</text>
+        </svg>
+        <div class="diagram-caption">Three modes of expressing conditional sentences with the same meaning</div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- CONTRASTING -->
+    <section class="section" id="contrasting">
+      <div class="section-header">
+        <div class="section-letter">D</div>
+        <div>
+          <div class="section-title">Modes of Expressing Contrasting Sentences</div>
+          <div class="section-subtitle">Concession and contrast words and phrases</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">i. though / although / as</div>
+          <div class="card-body">
+            <em>He is straightforward, <strong>though/although</strong> he is rich.</em><br>
+            <em><strong>Rich as</strong> he is, he is straightforward.</em>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">ii. however</div>
+          <div class="card-body">
+            <em><strong>However</strong> rich he may be, he is never contented.</em><br>
+            <em><strong>However</strong> often he may try, he will never succeed.</em>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">iii. at the same time / all the same</div>
+          <div class="card-body">
+            <em>There is some force in what you say; <strong>at the same time</strong>, we are not in position to take risk.</em>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">iv. Participle + noun-clause</div>
+          <div class="card-body">
+            <em><strong>Admitting that</strong> India may not achieve hundred per cent literacy by 2004, the country may yet come close to the goal.</em>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">v. for all that / in spite of</div>
+          <div class="card-body">
+            <em>He will not trust you <strong>for all that / in spite of</strong> all you say in your defence.</em>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">vi. although…yet &amp; vii. nevertheless / nonetheless</div>
+          <div class="card-body">
+            <em><strong>Although</strong> he is very careless in his studies, <strong>yet</strong> he has got compartment twice.</em><br>
+            <em>Nobody blames our cricket team… <strong>nevertheless</strong> we are all disappointed.</em>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- DEGREE OF COMPARISON -->
+    <section class="section" id="degree">
+      <div class="section-header">
+        <div class="section-letter">E</div>
+        <div>
+          <div class="section-title">Interchange of Degree of Comparison</div>
+          <div class="section-subtitle">Superlative ↔ Comparative ↔ Positive</div>
+        </div>
+      </div>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 680 160" width="100%" style="max-width:660px;" xmlns="http://www.w3.org/2000/svg">
+          <!-- Title -->
+          <text x="340" y="22" font-family="Playfair Display,serif" font-size="14" fill="#F5A623" text-anchor="middle" font-weight="700">Degree Interchange — Sachin Tendulkar Example</text>
+          <!-- Superlative -->
+          <rect x="20" y="38" width="190" height="105" rx="10" fill="#1E3A5F" stroke="#F5A623" stroke-width="1.5"/>
+          <text x="115" y="62" font-family="Inter,sans-serif" font-size="11" fill="#F5A623" text-anchor="middle" font-weight="700">SUPERLATIVE</text>
+          <line x1="35" y1="70" x2="195" y2="70" stroke="rgba(245,166,35,0.2)" stroke-width="1"/>
+          <text x="115" y="90" font-family="Inter,sans-serif" font-size="12" fill="#E8F4FD" text-anchor="middle">Sachin is the</text>
+          <text x="115" y="108" font-family="Inter,sans-serif" font-size="12" fill="#4ECDC4" text-anchor="middle" font-weight="700">best</text>
+          <text x="115" y="126" font-family="Inter,sans-serif" font-size="12" fill="#E8F4FD" text-anchor="middle">batsman of India.</text>
+          <!-- Arrow 1 -->
+          <path d="M215 90 L250 90" stroke="#F5A623" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <polygon points="250,85 260,90 250,95" fill="#F5A623"/>
+          <!-- Comparative -->
+          <rect x="265" y="38" width="155" height="105" rx="10" fill="#1E3A5F" stroke="#4ECDC4" stroke-width="1.5"/>
+          <text x="342" y="62" font-family="Inter,sans-serif" font-size="11" fill="#4ECDC4" text-anchor="middle" font-weight="700">COMPARATIVE</text>
+          <line x1="280" y1="70" x2="405" y2="70" stroke="rgba(78,205,196,0.2)" stroke-width="1"/>
+          <text x="342" y="88" font-family="Inter,sans-serif" font-size="11" fill="#E8F4FD" text-anchor="middle">Sachin is</text>
+          <text x="342" y="104" font-family="Inter,sans-serif" font-size="11" fill="#4ECDC4" text-anchor="middle" font-weight="700">better than</text>
+          <text x="342" y="120" font-family="Inter,sans-serif" font-size="11" fill="#E8F4FD" text-anchor="middle">any other batsman</text>
+          <text x="342" y="136" font-family="Inter,sans-serif" font-size="11" fill="#E8F4FD" text-anchor="middle">of India.</text>
+          <!-- Arrow 2 -->
+          <path d="M425 90 L460 90" stroke="#4ECDC4" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <polygon points="460,85 470,90 460,95" fill="#4ECDC4"/>
+          <!-- Positive -->
+          <rect x="475" y="38" width="185" height="105" rx="10" fill="#1E3A5F" stroke="#E07A5F" stroke-width="1.5"/>
+          <text x="567" y="62" font-family="Inter,sans-serif" font-size="11" fill="#E07A5F" text-anchor="middle" font-weight="700">POSITIVE</text>
+          <line x1="490" y1="70" x2="645" y2="70" stroke="rgba(224,122,95,0.2)" stroke-width="1"/>
+          <text x="567" y="90" font-family="Inter,sans-serif" font-size="11" fill="#E8F4FD" text-anchor="middle">No other batsman</text>
+          <text x="567" y="106" font-family="Inter,sans-serif" font-size="11" fill="#E8F4FD" text-anchor="middle">of India is</text>
+          <text x="567" y="122" font-family="Inter,sans-serif" font-size="11" fill="#E07A5F" text-anchor="middle" font-weight="700">so good as</text>
+          <text x="567" y="138" font-family="Inter,sans-serif" font-size="11" fill="#E8F4FD" text-anchor="middle">Sachin.</text>
+        </svg>
+        <div class="diagram-caption">The same meaning expressed in three different degrees of comparison</div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- VOICE -->
+    <section class="section" id="voice">
+      <div class="section-header">
+        <div class="section-letter">F</div>
+        <div>
+          <div class="section-title">Voice: Active ↔ Passive</div>
+          <div class="section-subtitle">10 Conditions for Passive Voice Construction</div>
+        </div>
+      </div>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 680 160" width="100%" style="max-width:660px;" xmlns="http://www.w3.org/2000/svg">
+          <text x="340" y="22" font-family="Playfair Display,serif" font-size="14" fill="#F5A623" text-anchor="middle" font-weight="700">Active ↔ Passive Transformation</text>
+          <!-- Active -->
+          <rect x="20" y="38" width="270" height="100" rx="10" fill="#1E3A5F" stroke="#F5A623" stroke-width="1.5"/>
+          <text x="155" y="62" font-family="Inter,sans-serif" font-size="11" fill="#F5A623" text-anchor="middle" font-weight="700">ACTIVE VOICE</text>
+          <text x="155" y="84" font-family="Inter,sans-serif" font-size="13" fill="#94B4CC" text-anchor="middle">Subject + Verb + Object</text>
+          <rect x="35" y="93" width="240" height="30" rx="6" fill="rgba(245,166,35,0.08)"/>
+          <text x="155" y="113" font-family="JetBrains Mono,monospace" font-size="12" fill="#E8F4FD" text-anchor="middle">The police caught the robber.</text>
+          <!-- Arrow -->
+          <path d="M295 88 L325 88" stroke="#4ECDC4" stroke-width="2" stroke-dasharray="5,4"/>
+          <polygon points="325,83 337,88 325,93" fill="#4ECDC4"/>
+          <text x="316" y="76" font-family="Inter,sans-serif" font-size="9" fill="#4ECDC4" text-anchor="middle">by</text>
+          <!-- Passive -->
+          <rect x="340" y="38" width="320" height="100" rx="10" fill="#1E3A5F" stroke="#4ECDC4" stroke-width="1.5"/>
+          <text x="500" y="62" font-family="Inter,sans-serif" font-size="11" fill="#4ECDC4" text-anchor="middle" font-weight="700">PASSIVE VOICE</text>
+          <text x="500" y="84" font-family="Inter,sans-serif" font-size="11" fill="#94B4CC" text-anchor="middle">Object + be + Past Participle + by + Subject</text>
+          <rect x="355" y="93" width="290" height="30" rx="6" fill="rgba(78,205,196,0.07)"/>
+          <text x="500" y="113" font-family="JetBrains Mono,monospace" font-size="12" fill="#E8F4FD" text-anchor="middle">The robber was caught by the police.</text>
+        </svg>
+        <div class="diagram-caption">Active-Passive voice transformation pattern</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📋 10 Conditions Regarding Passive Voice</div>
+        <ol class="rule-list voice-conditions" style="list-style:none;">
+          <li><span class="rule-num">1</span>Only <strong>transitive verbs</strong> can be changed to passive form.</li>
+          <li><span class="rule-num">2</span>The <strong>third form</strong> (past participle) of the verb is always used.</li>
+          <li><span class="rule-num">3</span>There must be a helping verb <strong>'be'</strong>.</li>
+          <li><span class="rule-num">4</span>Existing helping verbs remain along with 'be' as needed.</li>
+          <li><span class="rule-num">5</span><strong>Tense does not change</strong>.</li>
+          <li><span class="rule-num">6</span>Preposition <strong>'by'</strong> is generally used when the doer is active.</li>
+          <li><span class="rule-num">7</span>If a preposition already exists, retain it and add our own.</li>
+          <li><span class="rule-num">8</span>The doer is sometimes not written but always <strong>implied</strong>.</li>
+          <li><span class="rule-num">9</span><strong>Subject takes the place of object</strong> and vice versa.</li>
+          <li><span class="rule-num">10</span>The verb is given according to the need of the <strong>subject</strong>.</li>
+        </ol>
+      </div>
+
+      <h3 style="font-family:'Playfair Display',serif;font-size:18px;color:var(--text);margin:24px 0 12px;">Solved Examples</h3>
+      <table class="change-table">
+        <thead><tr><th>Active</th><th>Passive</th></tr></thead>
+        <tbody>
+          <tr><td>Somebody had cleaned my shoes.</td><td>My shoes had been cleaned.</td></tr>
+          <tr><td>We use this room on special occasions.</td><td>The room is used only on special occasions.</td></tr>
+          <tr><td>They rang the church bells as a flood warning.</td><td>Church bells were rung as a flood warning.</td></tr>
+          <tr><td>China has made an atom bomb.</td><td>An atom bomb has been made by China.</td></tr>
+          <tr><td>The police has caught the robber.</td><td>The robber has been caught by the police.</td></tr>
+          <tr><td>The fire had destroyed all the huts.</td><td>All the huts had been destroyed by the fire.</td></tr>
+          <tr><td>They will attend the conference.</td><td>The conference will be attended by them.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- SENTENCE TYPES -->
+    <section class="section" id="sentence-types">
+      <div class="section-header">
+        <div class="section-letter">J</div>
+        <div>
+          <div class="section-title">Sentence Type Transformations</div>
+          <div class="section-subtitle">Simple, Compound, Complex | Exclamatory &amp; Assertive | Affirmative &amp; Negative</div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:16px;">
+        <div class="card">
+          <div class="card-title">G. Exclamatory ↔ Assertive</div>
+          <div class="example-box">
+            <div class="example-label">Exclamatory → Assertive</div>
+            <div class="example-text">If I could only get the Nobel prize!</div>
+            <div class="example-result">I earnestly desire to get the Nobel prize.</div>
+          </div>
+          <div class="example-box">
+            <div class="example-label">Exclamatory → Assertive</div>
+            <div class="example-text">What a very lame excuse!</div>
+            <div class="example-result">You are giving a lame excuse.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">H. Affirmative ↔ Negative</div>
+          <div class="example-box">
+            <div class="example-label">Negative → Affirmative</div>
+            <div class="example-text">His services to the Indian Army cannot be forgotten.</div>
+            <div class="example-result">His services to the Indian Army have been too great to be forgotten.</div>
+          </div>
+          <div class="example-box">
+            <div class="example-label">Negative → Affirmative</div>
+            <div class="example-text">He left no plan untried.</div>
+            <div class="example-result">He tried all the plans.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">I. Substitution of Parts of Speech</div>
+        <div class="card-body">The same idea can be expressed using different parts of speech — noun, verb, adjective, or adverb — without changing the meaning.</div>
+        <div style="margin-top:12px;">
+          <table class="change-table">
+            <thead><tr><th>Form</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>Noun</td><td>Between soft skills and hard skills, there is a huge <em>difference</em> of salary.</td></tr>
+              <tr><td>Verb</td><td>The soft skills and hard skills <em>differ</em> greatly in salary.</td></tr>
+              <tr><td>Adjective</td><td>The salary offered for soft skills is very <em>different</em> from that for hard skills.</td></tr>
+              <tr><td>Adverb</td><td>Soft skills and hard skills very <em>differently</em> command salary.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <div class="card-title">J. Simple ↔ Compound ↔ Complex</div>
+        <div class="grid-2">
+          <div class="example-box">
+            <div class="example-label">Simple</div>
+            <div class="example-text">Notwithstanding his sorrow, he is hopeful.</div>
+          </div>
+          <div class="example-box">
+            <div class="example-label">Compound</div>
+            <div class="example-result">He is sorrowful, but yet hopeful.</div>
+          </div>
+          <div class="example-box">
+            <div class="example-label">Simple</div>
+            <div class="example-text">He is certain of giving you profit.</div>
+          </div>
+          <div class="example-box">
+            <div class="example-label">Complex</div>
+            <div class="example-result">He is certain that he will give you profit.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- PARTS OF SPEECH -->
+    <section class="section" id="parts-speech">
+      <div class="section-header">
+        <div class="section-letter">📚</div>
+        <div>
+          <div class="section-title">17.2 Words as Different Parts of Speech</div>
+          <div class="section-subtitle">The same word can function as different parts of speech</div>
+        </div>
+      </div>
+      <div class="pos-grid">
+        <div class="pos-card">
+          <div class="pos-word">all</div>
+          <div class="pos-usage">
+            <div><span class="pos-tag">Adj. of Quantity</span><br><span class="pos-ex">He ate <em>all</em> the food.</span></div>
+            <div style="margin-top:8px;"><span class="pos-tag">Indef. Num. Adj.</span><br><span class="pos-ex">We must <em>all</em> die some day.</span></div>
+            <div style="margin-top:8px;"><span class="pos-tag">Adj. as Noun</span><br><span class="pos-ex">I lost my <em>all</em> on that day.</span></div>
+          </div>
+        </div>
+        <div class="pos-card">
+          <div class="pos-word">but</div>
+          <div class="pos-usage">
+            <div><span class="pos-tag">Adverb</span><br><span class="pos-ex">There is <em>but</em> (only) one person present.</span></div>
+            <div style="margin-top:8px;"><span class="pos-tag">Preposition</span><br><span class="pos-ex">Who could have done this <em>but</em> (except) Ravi?</span></div>
+            <div style="margin-top:8px;"><span class="pos-tag">Conj. Co-ord.</span><br><span class="pos-ex">He is man of common sense, <em>but</em> not a good speaker.</span></div>
+          </div>
+        </div>
+        <div class="pos-card">
+          <div class="pos-word">near</div>
+          <div class="pos-usage">
+            <div><span class="pos-tag">Adverb</span><br><span class="pos-ex">Come <em>near</em>, while I ask you.</span></div>
+            <div style="margin-top:8px;"><span class="pos-tag">Preposition</span><br><span class="pos-ex">There is a fine garden <em>near</em> our house.</span></div>
+            <div style="margin-top:8px;"><span class="pos-tag">Adjective</span><br><span class="pos-ex">He is a <em>near</em> relative of mine.</span></div>
+          </div>
+        </div>
+        <div class="pos-card">
+          <div class="pos-word">since</div>
+          <div class="pos-usage">
+            <div><span class="pos-tag">Preposition</span><br><span class="pos-ex">I have not seen him <em>since</em> Sunday.</span></div>
+            <div style="margin-top:8px;"><span class="pos-tag">Adverb</span><br><span class="pos-ex">I purchased the house four weeks <em>since</em>.</span></div>
+            <div style="margin-top:8px;"><span class="pos-tag">Conj. Subord.</span><br><span class="pos-ex">They must trust you, <em>since</em> you are speaking in earnest.</span></div>
+          </div>
+        </div>
+        <div class="pos-card">
+          <div class="pos-word">only</div>
+          <div class="pos-usage">
+            <div><span class="pos-tag">Adjective</span><br><span class="pos-ex">The <em>only</em> toy I had was stolen.</span></div>
+            <div style="margin-top:8px;"><span class="pos-tag">Adverb</span><br><span class="pos-ex">I heard of this <em>only</em> from you.</span></div>
+            <div style="margin-top:8px;"><span class="pos-tag">Conj. Co-ord.</span><br><span class="pos-ex">Do what you like; <em>only</em>.</span></div>
+          </div>
+        </div>
+        <div class="pos-card">
+          <div class="pos-word">much</div>
+          <div class="pos-usage">
+            <div><span class="pos-tag">Adv. of Qty.</span><br><span class="pos-ex">He has wasted <em>much</em> time.</span></div>
+            <div style="margin-top:8px;"><span class="pos-tag">Adj. of Qty.</span><br><span class="pos-ex">I am <em>much</em> pleased with your performance.</span></div>
+            <div style="margin-top:8px;"><span class="pos-tag">Adj. as Noun</span><br><span class="pos-ex">He will not get <em>much</em> from you.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- HOMONYMS -->
+    <section class="section" id="homonyms">
+      <div class="section-header">
+        <div class="section-letter">🔤</div>
+        <div>
+          <div class="section-title">Homonyms &amp; Homophones</div>
+          <div class="section-subtitle">Same sound, different meanings or spellings</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">📖 Homonym</div>
+          <div class="card-body">A word that has the <strong>same sound and spelling</strong> as another, but is different in meaning and origin.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">📖 Homophone</div>
+          <div class="card-body">A word that <strong>sounds the same</strong> as another, but differs in spelling, meaning, and origin. e.g., <em>ate, eight</em></div>
+        </div>
+      </div>
+      <h3 style="font-family:'Playfair Display',serif;font-size:17px;color:var(--text);margin:20px 0 12px;">Common Homophones</h3>
+      <div class="homo-grid">
+        <div class="homo-pair">made / maid</div>
+        <div class="homo-pair">mail / male</div>
+        <div class="homo-pair">main / mane</div>
+        <div class="homo-pair">manner / manor</div>
+        <div class="homo-pair">meat / meet</div>
+        <div class="homo-pair">medal / meddle</div>
+        <div class="homo-pair">miner / minor</div>
+        <div class="homo-pair">none / nun</div>
+        <div class="homo-pair">one / won</div>
+        <div class="homo-pair">pail / pale</div>
+        <div class="homo-pair">pain / pane</div>
+        <div class="homo-pair">pair / pare / pear</div>
+        <div class="homo-pair">peace / piece</div>
+        <div class="homo-pair">plain / plane</div>
+        <div class="homo-pair">pray / prey</div>
+        <div class="homo-pair">flea / flee</div>
+        <div class="homo-pair">flour / flower</div>
+        <div class="homo-pair">foul / fowl</div>
+        <div class="homo-pair">gait / gate</div>
+        <div class="homo-pair">great / grate</div>
+        <div class="homo-pair">hair / hare</div>
+        <div class="homo-pair">hall / haul</div>
+        <div class="homo-pair">heal / heel</div>
+        <div class="homo-pair">hear / here</div>
+        <div class="homo-pair">heard / herd</div>
+        <div class="homo-pair">hole / whole</div>
+        <div class="homo-pair">hour / our</div>
+        <div class="homo-pair">knead / need</div>
+        <div class="homo-pair">knew / new</div>
+        <div class="homo-pair">knot / not</div>
+        <div class="homo-pair">know / no</div>
+        <div class="homo-pair">lain / lane</div>
+        <div class="homo-pair">tail / tale</div>
+        <div class="homo-pair">their / there</div>
+        <div class="homo-pair">throne / thrown</div>
+        <div class="homo-pair">to / too / two</div>
+        <div class="homo-pair">vain / vane / vein</div>
+        <div class="homo-pair">waist / waste</div>
+        <div class="homo-pair">wait / weight</div>
+        <div class="homo-pair">ware / wear</div>
+        <div class="homo-pair">beat / beet</div>
+        <div class="homo-pair">beau / bow</div>
+        <div class="homo-pair">bell / belle</div>
+        <div class="homo-pair">berth / birth</div>
+        <div class="homo-pair">blew / blue</div>
+        <div class="homo-pair">board / bored</div>
+        <div class="homo-pair">brake / break</div>
+        <div class="homo-pair">buy / by</div>
+        <div class="homo-pair">cell / sell</div>
+        <div class="homo-pair">cent / sent / scent</div>
+        <div class="homo-pair">dear / deer</div>
+        <div class="homo-pair">die / dye</div>
+        <div class="homo-pair">earn / urn</div>
+        <div class="homo-pair">fair / fare</div>
+        <div class="homo-pair">feat / feet</div>
+        <div class="homo-pair">loan / lone</div>
+        <div class="homo-pair">lead / led</div>
+        <div class="homo-pair">lie / lye</div>
+        <div class="homo-pair">veil / vale</div>
+        <div class="homo-pair">wade / weighed</div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ONE WORD SUBSTITUTION -->
+    <section class="section" id="one-word">
+      <div class="section-header">
+        <div class="section-letter">📝</div>
+        <div>
+          <div class="section-title">17.3 One-Word Substitution</div>
+          <div class="section-subtitle">One precise word for a descriptive phrase</div>
+        </div>
+      </div>
+      <div class="ows-grid">
+        <div class="ows-item"><span class="ows-phrase">A basket in which a fisherman puts his fish</span><span class="ows-word">Creel</span></div>
+        <div class="ows-item"><span class="ows-phrase">A book containing information on all branches of knowledge</span><span class="ows-word">Encyclopaedia</span></div>
+        <div class="ows-item"><span class="ows-phrase">A book containing the words of a language with their definitions in alphabetical order</span><span class="ows-word">Dictionary</span></div>
+        <div class="ows-item"><span class="ows-phrase">A book in which the events of each day are recorded</span><span class="ows-word">Diary</span></div>
+        <div class="ows-item"><span class="ows-phrase">A book of accounts showing debits and credits</span><span class="ows-word">Ledger</span></div>
+        <div class="ows-item"><span class="ows-phrase">A child born after the death of his father / book published after author's death</span><span class="ows-word">Posthumous</span></div>
+        <div class="ows-item"><span class="ows-phrase">A child whose parents are dead</span><span class="ows-word">Orphan</span></div>
+        <div class="ows-item"><span class="ows-phrase">A cure for all diseases</span><span class="ows-word">Panacea</span></div>
+        <div class="ows-item"><span class="ows-phrase">A disease affecting many persons at the same time</span><span class="ows-word">Epidemic</span></div>
+        <div class="ows-item"><span class="ows-phrase">A forecast of the result of a disease or illness</span><span class="ows-word">Prognosis</span></div>
+        <div class="ows-item"><span class="ows-phrase">A general pardon of political offenders</span><span class="ows-word">Amnesty</span></div>
+        <div class="ows-item"><span class="ows-phrase">A great lover or collector of books</span><span class="ows-word">Bibliophile</span></div>
+        <div class="ows-item"><span class="ows-phrase">A life history of a person written by another</span><span class="ows-word">Biography</span></div>
+        <div class="ows-item"><span class="ows-phrase">A life history of a person written by himself</span><span class="ows-word">Autobiography</span></div>
+        <div class="ows-item"><span class="ows-phrase">A man whose wife is dead</span><span class="ows-word">Widower</span></div>
+        <div class="ows-item"><span class="ows-phrase">A woman whose husband is dead</span><span class="ows-word">Widow</span></div>
+        <div class="ows-item"><span class="ows-phrase">A medicine for producing sleep</span><span class="ows-word">Narcotic</span></div>
+        <div class="ows-item"><span class="ows-phrase">A medicine to counteract poison</span><span class="ows-word">Antidote</span></div>
+        <div class="ows-item"><span class="ows-phrase">A minister representing a sovereign in a foreign country</span><span class="ows-word">Ambassador</span></div>
+        <div class="ows-item"><span class="ows-phrase">A paper written by hand</span><span class="ows-word">Manuscript</span></div>
+        <div class="ows-item"><span class="ows-phrase">A person who can neither read nor write</span><span class="ows-word">Illiterate</span></div>
+        <div class="ows-item"><span class="ows-phrase">A person who easily believes what is told to him</span><span class="ows-word">Credulous</span></div>
+        <div class="ows-item"><span class="ows-phrase">A person who is hard to please</span><span class="ows-word">Fastidious</span></div>
+        <div class="ows-item"><span class="ows-phrase">A person who is indifferent to pleasure or pain</span><span class="ows-word">Stoic</span></div>
+        <div class="ows-item"><span class="ows-phrase">A person who is insensible to kind thoughts or feelings</span><span class="ows-word">Callous</span></div>
+        <div class="ows-item"><span class="ows-phrase">A person who lives by himself</span><span class="ows-word">Recluse</span></div>
+        <div class="ows-item"><span class="ows-phrase">A person who spends his money recklessly</span><span class="ows-word">Spendthrift</span></div>
+        <div class="ows-item"><span class="ows-phrase">A person who starves the body for the good of the soul</span><span class="ows-word">Ascetic</span></div>
+        <div class="ows-item"><span class="ows-phrase">A person who lives on vegetables</span><span class="ows-word">Vegetarian</span></div>
+        <div class="ows-item"><span class="ows-phrase">A person who looks at the bright side of things</span><span class="ows-word">Optimist</span></div>
+        <div class="ows-item"><span class="ows-phrase">A person who believes in single God</span><span class="ows-word">Monotheist</span></div>
+        <div class="ows-item"><span class="ows-phrase">A person who believes in many Gods</span><span class="ows-word">Polytheist</span></div>
+        <div class="ows-item"><span class="ows-phrase">One who hates mankind</span><span class="ows-word">Misanthrope</span></div>
+        <div class="ows-item"><span class="ows-phrase">One who is a hater of women</span><span class="ows-word">Misogynist</span></div>
+        <div class="ows-item"><span class="ows-phrase">One who knows everything</span><span class="ows-word">Omniscient</span></div>
+        <div class="ows-item"><span class="ows-phrase">One who is all powerful</span><span class="ows-word">Omnipotent</span></div>
+        <div class="ows-item"><span class="ows-phrase">One who knows many languages</span><span class="ows-word">Linguist</span></div>
+        <div class="ows-item"><span class="ows-phrase">One who leaves his country to settle elsewhere</span><span class="ows-word">Emigrant</span></div>
+        <div class="ows-item"><span class="ows-phrase">One who foretells events correctly</span><span class="ows-word">Prophet</span></div>
+        <div class="ows-item"><span class="ows-phrase">One who foretells things by reference to stars</span><span class="ows-word">Astrologer</span></div>
+        <div class="ows-item"><span class="ows-phrase">One who makes an eloquent public speech</span><span class="ows-word">Orator</span></div>
+        <div class="ows-item"><span class="ows-phrase">One who makes ornaments in gold</span><span class="ows-word">Goldsmith</span></div>
+        <div class="ows-item"><span class="ows-phrase">One who makes study of diseases</span><span class="ows-word">Pathologist</span></div>
+        <div class="ows-item"><span class="ows-phrase">One who studies the evolution of mankind</span><span class="ows-word">Anthropologist</span></div>
+        <div class="ows-item"><span class="ows-phrase">One who studies the past through objects left behind</span><span class="ows-word">Archaeologist</span></div>
+        <div class="ows-item"><span class="ows-phrase">One who studies the science and origin of words</span><span class="ows-word">Etymologist</span></div>
+        <div class="ows-item"><span class="ows-phrase">One who totally abstains from alcoholic drinks</span><span class="ows-word">Teetotaller</span></div>
+        <div class="ows-item"><span class="ows-phrase">One who treats diseases by performing operations</span><span class="ows-word">Surgeon</span></div>
+        <div class="ows-item"><span class="ows-phrase">One who writes a novel</span><span class="ows-word">Novelist</span></div>
+        <div class="ows-item"><span class="ows-phrase">A place where aeroplanes are kept</span><span class="ows-word">Hangar</span></div>
+        <div class="ows-item"><span class="ows-phrase">A place where birds are kept</span><span class="ows-word">Aviary</span></div>
+        <div class="ows-item"><span class="ows-phrase">A place where prayers are said</span><span class="ows-word">Temple/Church/Mosque</span></div>
+        <div class="ows-item"><span class="ows-phrase">A place where soldiers are quartered</span><span class="ows-word">Cantonment</span></div>
+        <div class="ows-item"><span class="ows-phrase">A place where young plants are reared</span><span class="ows-word">Nursery</span></div>
+        <div class="ows-item"><span class="ows-phrase">A state in which government is carried on by representatives of the people</span><span class="ows-word">Republic</span></div>
+        <div class="ows-item"><span class="ows-phrase">A substance that kills germs</span><span class="ows-word">Germicide</span></div>
+        <div class="ows-item"><span class="ows-phrase">A substance that kills insects</span><span class="ows-word">Insecticide</span></div>
+        <div class="ows-item"><span class="ows-phrase">An exact copy of handwriting, printing or a picture</span><span class="ows-word">Facsimile</span></div>
+        <div class="ows-item"><span class="ows-phrase">Belonging to all parts of the world</span><span class="ows-word">Cosmopolitan</span></div>
+        <div class="ows-item"><span class="ows-phrase">Confinement to one place to avoid spread of infection</span><span class="ows-word">Quarantine</span></div>
+        <div class="ows-item"><span class="ows-phrase">Home sickness or sentimental longing for the past</span><span class="ows-word">Nostalgia</span></div>
+        <div class="ows-item"><span class="ows-phrase">Incapable of being believed</span><span class="ows-word">Incredible</span></div>
+        <div class="ows-item"><span class="ows-phrase">Incapable of being conquered</span><span class="ows-word">Unconquerable</span></div>
+        <div class="ows-item"><span class="ows-phrase">Incapable of being destroyed</span><span class="ows-word">Indestructible</span></div>
+        <div class="ows-item"><span class="ows-phrase">Incapable of being read</span><span class="ows-word">Illegible</span></div>
+        <div class="ows-item"><span class="ows-phrase">Incapable of making a mistake</span><span class="ows-word">Infallible</span></div>
+        <div class="ows-item"><span class="ows-phrase">Loss of memory</span><span class="ows-word">Amnesia</span></div>
+        <div class="ows-item"><span class="ows-phrase">Occurring at the same time</span><span class="ows-word">Simultaneous</span></div>
+        <div class="ows-item"><span class="ows-phrase">That which is everlasting</span><span class="ows-word">Perennial</span></div>
+        <div class="ows-item"><span class="ows-phrase">That which is subject to death</span><span class="ows-word">Mortal</span></div>
+        <div class="ows-item"><span class="ows-phrase">Having no beginning or end to its existence</span><span class="ows-word">Eternal</span></div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- FOREIGN EXPRESSIONS -->
+    <section class="section" id="foreign">
+      <div class="section-header">
+        <div class="section-letter">🌍</div>
+        <div>
+          <div class="section-title">Foreign Expressions</div>
+          <div class="section-subtitle">Latin, French, Italian, Greek &amp; other borrowed phrases</div>
+        </div>
+      </div>
+      <div style="columns: 2; column-gap: 16px;">
+        <div class="foreign-item" style="break-inside:avoid;">
+          <div class="foreign-term">a la carte</div>
+          <div class="foreign-lang">French</div>
+          <div class="foreign-def">According to the bill of fare as given on the menu. <em>We decided to go a la carte.</em></div>
+        </div>
+        <div class="foreign-item" style="break-inside:avoid;">
+          <div class="foreign-term">a posteriori</div>
+          <div class="foreign-lang">Latin</div>
+          <div class="foreign-def">What comes after. Inductive reasoning — draws conclusions about causes from their supposed effects. <em>"From what comes after."</em></div>
+        </div>
+        <div class="foreign-item" style="break-inside:avoid;">
+          <div class="foreign-term">a priori</div>
+          <div class="foreign-lang">Latin</div>
+          <div class="foreign-def">From the former, already known. Deductive reasoning — works from the general to the particular. <em>"From the former."</em></div>
+        </div>
+        <div class="foreign-item" style="break-inside:avoid;">
+          <div class="foreign-term">ab initio</div>
+          <div class="foreign-lang">Latin</div>
+          <div class="foreign-def">From the beginning; especially of contracts which are null and void from the beginning.</div>
+        </div>
+        <div class="foreign-item" style="break-inside:avoid;">
+          <div class="foreign-term">ad hoc</div>
+          <div class="foreign-lang">Latin</div>
+          <div class="foreign-def">For a particular purpose, without deep thought; temporary. <em>We have made only ad hoc arrangements.</em></div>
+        </div>
+        <div class="foreign-item" style="break-inside:avoid;">
+          <div class="foreign-term">ad interim</div>
+          <div class="foreign-lang">Latin</div>
+          <div class="foreign-def">For the meantime, temporary, provisional. <em>Gulzarilal Nanda was appointed ad interim Prime Minister.</em></div>
+        </div>
+        <div class="foreign-item" style="break-inside:avoid;">
+          <div class="foreign-term">alma mater</div>
+          <div class="foreign-lang">Latin</div>
+          <div class="foreign-def">One's university or college. The literal meaning is "nourishing mother."</div>
+        </div>
+        <div class="foreign-item" style="break-inside:avoid;">
+          <div class="foreign-term">alter ego</div>
+          <div class="foreign-lang">Latin</div>
+          <div class="foreign-def">"Other self" — an intimate and trusted friend.</div>
+        </div>
+        <div class="foreign-item" style="break-inside:avoid;">
+          <div class="foreign-term">amour vincit omnia</div>
+          <div class="foreign-lang">Latin</div>
+          <div class="foreign-def">Love conquers all.</div>
+        </div>
+        <div class="foreign-item" style="break-inside:avoid;">
+          <div class="foreign-term">anno domini (A.D.)</div>
+          <div class="foreign-lang">Latin</div>
+          <div class="foreign-def">In the year of the Lord. The calendar years before the birth of Jesus are referred to as B.C. (Before Christ).</div>
+        </div>
+        <div class="foreign-item" style="break-inside:avoid;">
+          <div class="foreign-term">apartheid</div>
+          <div class="foreign-lang">African</div>
+          <div class="foreign-def">"Separation" — the system of rigorous segregation between Europeans and natives practised in South Africa.</div>
+        </div>
+        <div class="foreign-item" style="break-inside:avoid;">
+          <div class="foreign-term">cul-de-sac</div>
+          <div class="foreign-lang">French</div>
+          <div class="foreign-def">A blind alley. A street or passage that has an entry but not an exit.</div>
+        </div>
+        <div class="foreign-item" style="break-inside:avoid;">
+          <div class="foreign-term">de facto</div>
+          <div class="foreign-lang">Latin</div>
+          <div class="foreign-def">In actual practice. The things which exist in law do not always exist in fact and vice versa.</div>
+        </div>
+        <div class="foreign-item" style="break-inside:avoid;">
+          <div class="foreign-term">ex officio</div>
+          <div class="foreign-lang">Latin</div>
+          <div class="foreign-def">In virtue of (his) office. <em>The President of India is ex officio the supreme commander of the armed forces.</em></div>
+        </div>
+        <div class="foreign-item" style="break-inside:avoid;">
+          <div class="foreign-term">fait accompli</div>
+          <div class="foreign-lang">French</div>
+          <div class="foreign-def">An accomplished fact. A thing already done. There's no use arguing about it.</div>
+        </div>
+        <div class="foreign-item" style="break-inside:avoid;">
+          <div class="foreign-term">paparazzi</div>
+          <div class="foreign-lang">Italian</div>
+          <div class="foreign-def">Photographers of celebrities — freelance commercial photographers who stalk celebrities for their pictures.</div>
+        </div>
+        <div class="foreign-item" style="break-inside:avoid;">
+          <div class="foreign-term">per diem</div>
+          <div class="foreign-lang">Latin</div>
+          <div class="foreign-def">By the day. Paid a daily retainer rather than a regular salary. Lecturers in some coaching classes are paid per diem.</div>
+        </div>
+        <div class="foreign-item" style="break-inside:avoid;">
+          <div class="foreign-term">persona non grata</div>
+          <div class="foreign-lang">Latin</div>
+          <div class="foreign-def">An unacceptable person; an unwelcome person.</div>
+        </div>
+        <div class="foreign-item" style="break-inside:avoid;">
+          <div class="foreign-term">post mortem</div>
+          <div class="foreign-lang">Latin</div>
+          <div class="foreign-def">Re-examination of the body to determine the cause of death.</div>
+        </div>
+        <div class="foreign-item" style="break-inside:avoid;">
+          <div class="foreign-term">perestroika</div>
+          <div class="foreign-lang">Russian</div>
+          <div class="foreign-def">Restructuring — the reform ideas Mikhail Gorbachev brought to the Soviet State in the 1980s.</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ABBREVIATIONS -->
+    <section class="section" id="abbreviations">
+      <div class="section-header">
+        <div class="section-letter">🔣</div>
+        <div>
+          <div class="section-title">17.4 Abbreviations</div>
+          <div class="section-subtitle">Scientific, Engineering, Commercial &amp; IT Terms</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">⚙️ Scientific &amp; Engineering</div>
+          <div class="abbr-table">
+            <span class="abbr-key">abs</span><span class="abbr-val">Absolute</span>
+            <span class="abbr-key">ac / a-c</span><span class="abbr-val">Alternating current</span>
+            <span class="abbr-key">A.D.</span><span class="abbr-val">Anno Domini</span>
+            <span class="abbr-key">a.m.</span><span class="abbr-val">Ante meridian</span>
+            <span class="abbr-key">B.C.</span><span class="abbr-val">Before Christ</span>
+            <span class="abbr-key">bp</span><span class="abbr-val">Boiling point</span>
+            <span class="abbr-key">°C</span><span class="abbr-val">Degree centigrade</span>
+            <span class="abbr-key">d-c / dc</span><span class="abbr-val">Direct current</span>
+            <span class="abbr-key">DNA</span><span class="abbr-val">Deoxyribonucleic acid</span>
+            <span class="abbr-key">e.g.</span><span class="abbr-val">Exempli gratia (for example)</span>
+            <span class="abbr-key">ECG</span><span class="abbr-val">Electrocardiogram</span>
+            <span class="abbr-key">etc.</span><span class="abbr-val">Etcetera (and so on)</span>
+            <span class="abbr-key">hp</span><span class="abbr-val">Horse power</span>
+            <span class="abbr-key">Hz</span><span class="abbr-val">Hertz</span>
+            <span class="abbr-key">i.e.</span><span class="abbr-val">Id est (that is)</span>
+            <span class="abbr-key">I.Q.</span><span class="abbr-val">Intelligent quotient</span>
+            <span class="abbr-key">kV</span><span class="abbr-val">Kilo volt</span>
+            <span class="abbr-key">kWhr</span><span class="abbr-val">Kilowatt-hour</span>
+            <span class="abbr-key">n.b.</span><span class="abbr-val">Nota bene (note carefully)</span>
+            <span class="abbr-key">NMR</span><span class="abbr-val">Nuclear magnetic resonance</span>
+            <span class="abbr-key">p.a.</span><span class="abbr-val">Per annum</span>
+            <span class="abbr-key">p.m.</span><span class="abbr-val">Post meridian</span>
+            <span class="abbr-key">rpm</span><span class="abbr-val">Revolutions per minute</span>
+            <span class="abbr-key">RSVP</span><span class="abbr-val">Répondez s'il vous plaît</span>
+            <span class="abbr-key">SD</span><span class="abbr-val">Standard deviation</span>
+            <span class="abbr-key">temp</span><span class="abbr-val">Temperature</span>
+            <span class="abbr-key">v.v.</span><span class="abbr-val">Vice versa</span>
+            <span class="abbr-key">viz.</span><span class="abbr-val">Videlicet (namely)</span>
+            <span class="abbr-key">W</span><span class="abbr-val">Watt</span>
+            <span class="abbr-key">w.p.m.</span><span class="abbr-val">Words per minute</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">💻 Computer &amp; IT Abbreviations</div>
+          <div class="abbr-table">
+            <span class="abbr-key">ATM</span><span class="abbr-val">Automatic Teller Machine</span>
+            <span class="abbr-key">BASIC</span><span class="abbr-val">Beginner All Purpose Symbolic Instruction Code</span>
+            <span class="abbr-key">BCD</span><span class="abbr-val">Binary Coded Decimal</span>
+            <span class="abbr-key">BIT</span><span class="abbr-val">Binary Digit</span>
+            <span class="abbr-key">CAD</span><span class="abbr-val">Computer Aided Design</span>
+            <span class="abbr-key">CAE</span><span class="abbr-val">Computer Aided Engineer</span>
+            <span class="abbr-key">COBOL</span><span class="abbr-val">Common Business Oriented Language</span>
+            <span class="abbr-key">CPU</span><span class="abbr-val">Central Processing Unit</span>
+            <span class="abbr-key">FAC</span><span class="abbr-val">Facsimile System</span>
+            <span class="abbr-key">GB</span><span class="abbr-val">Giga Bytes</span>
+            <span class="abbr-key">IBM</span><span class="abbr-val">International Business Machines</span>
+            <span class="abbr-key">IC</span><span class="abbr-val">Integrated Circuit</span>
+            <span class="abbr-key">IP</span><span class="abbr-val">Integrated Protocol</span>
+            <span class="abbr-key">LASER</span><span class="abbr-val">Light Amplification by Stimulated Emission of Radiation</span>
+            <span class="abbr-key">LCD</span><span class="abbr-val">Liquid Crystal Display</span>
+            <span class="abbr-key">MIS</span><span class="abbr-val">Management Information Service</span>
+            <span class="abbr-key">NOS</span><span class="abbr-val">Network Operating System</span>
+            <span class="abbr-key">RAM</span><span class="abbr-val">Random Access Memory</span>
+            <span class="abbr-key">ROM</span><span class="abbr-val">Read Only Memory</span>
+            <span class="abbr-key">UPS</span><span class="abbr-val">Uninterrupted Power Supply</span>
+            <span class="abbr-key">VAN</span><span class="abbr-val">Value Added Network</span>
+            <span class="abbr-key">VDU</span><span class="abbr-val">Visual Display Unit</span>
+            <span class="abbr-key">VLSI</span><span class="abbr-val">Very Large Scale Integration</span>
+            <span class="abbr-key">WAN</span><span class="abbr-val">Wide Area Network</span>
+          </div>
+          <div class="card-title" style="margin-top:20px;">📱 Email/SMS Abbreviations</div>
+          <div class="abbr-table">
+            <span class="abbr-key">ATB</span><span class="abbr-val">All the best</span>
+            <span class="abbr-key">BTW</span><span class="abbr-val">By the way</span>
+            <span class="abbr-key">ILU</span><span class="abbr-val">I love you</span>
+            <span class="abbr-key">KISS</span><span class="abbr-val">Keep it simple, stupid</span>
+            <span class="abbr-key">LOL</span><span class="abbr-val">Laughing out loud</span>
+            <span class="abbr-key">MSG</span><span class="abbr-val">Message</span>
+            <span class="abbr-key">OIC</span><span class="abbr-val">Oh, I see</span>
+            <span class="abbr-key">PCM</span><span class="abbr-val">Please call me</span>
+            <span class="abbr-key">THNQ</span><span class="abbr-val">Thank you</span>
+            <span class="abbr-key">THX</span><span class="abbr-val">Thanks</span>
+            <span class="abbr-key">W/O</span><span class="abbr-val">Without</span>
+            <span class="abbr-key">2moro</span><span class="abbr-val">Tomorrow</span>
+            <span class="abbr-key">4get</span><span class="abbr-val">Forget</span>
+            <span class="abbr-key">B4</span><span class="abbr-val">Before</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- MODALS -->
+    <section class="section" id="modals">
+      <div class="section-header">
+        <div class="section-letter">🧩</div>
+        <div>
+          <div class="section-title">Modals and Their Modalities</div>
+          <div class="section-subtitle">Modal verbs express the meanings/moods of sentences</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:20px;">
+        <div class="card-body">Modals express the meanings of the sentence — the <strong>modality</strong> or mood. The various forms or moods of the sentence are: declarative, interrogative, imperative, exclamatory, etc. Modalities include: statement, question, request, ability, wish, permission, possibility, insistence, characteristic, volition.</div>
+      </div>
+
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 680 260" width="100%" style="max-width:660px;" xmlns="http://www.w3.org/2000/svg">
+          <text x="340" y="22" font-family="Playfair Display,serif" font-size="14" fill="#F5A623" text-anchor="middle" font-weight="700">Modal Verbs and Their Primary Uses</text>
+          <!-- Row 1 -->
+          <rect x="15" y="38" width="105" height="50" rx="8" fill="#1E3A5F" stroke="#F5A623" stroke-width="1.5"/>
+          <text x="67" y="60" font-family="JetBrains Mono,monospace" font-size="15" fill="#F5A623" text-anchor="middle" font-weight="700">WILL</text>
+          <text x="67" y="76" font-family="Inter,sans-serif" font-size="9" fill="#94B4CC" text-anchor="middle">Prediction · Request</text>
+          <rect x="130" y="38" width="105" height="50" rx="8" fill="#1E3A5F" stroke="#4ECDC4" stroke-width="1.5"/>
+          <text x="182" y="60" font-family="JetBrains Mono,monospace" font-size="15" fill="#4ECDC4" text-anchor="middle" font-weight="700">SHALL</text>
+          <text x="182" y="76" font-family="Inter,sans-serif" font-size="9" fill="#94B4CC" text-anchor="middle">Prediction · Promise</text>
+          <rect x="245" y="38" width="105" height="50" rx="8" fill="#1E3A5F" stroke="#E07A5F" stroke-width="1.5"/>
+          <text x="297" y="60" font-family="JetBrains Mono,monospace" font-size="15" fill="#E07A5F" text-anchor="middle" font-weight="700">CAN</text>
+          <text x="297" y="76" font-family="Inter,sans-serif" font-size="9" fill="#94B4CC" text-anchor="middle">Capability · Permission</text>
+          <rect x="360" y="38" width="105" height="50" rx="8" fill="#1E3A5F" stroke="#9B8EC4" stroke-width="1.5"/>
+          <text x="412" y="60" font-family="JetBrains Mono,monospace" font-size="15" fill="#9B8EC4" text-anchor="middle" font-weight="700">MAY</text>
+          <text x="412" y="76" font-family="Inter,sans-serif" font-size="9" fill="#94B4CC" text-anchor="middle">Permission · Benediction</text>
+          <rect x="475" y="38" width="105" height="50" rx="8" fill="#1E3A5F" stroke="#FBBF24" stroke-width="1.5"/>
+          <text x="527" y="60" font-family="JetBrains Mono,monospace" font-size="15" fill="#FBBF24" text-anchor="middle" font-weight="700">MUST</text>
+          <text x="527" y="76" font-family="Inter,sans-serif" font-size="9" fill="#94B4CC" text-anchor="middle">Obligation · Conclusion</text>
+          <!-- Row 2 -->
+          <rect x="15" y="105" width="105" height="50" rx="8" fill="#1E3A5F" stroke="#F5A623" stroke-width="1"/>
+          <text x="67" y="127" font-family="JetBrains Mono,monospace" font-size="15" fill="#F5A623" text-anchor="middle" font-weight="700">OUGHT</text>
+          <text x="67" y="143" font-family="Inter,sans-serif" font-size="9" fill="#94B4CC" text-anchor="middle">Duty only</text>
+          <rect x="130" y="105" width="105" height="50" rx="8" fill="#1E3A5F" stroke="#4ECDC4" stroke-width="1"/>
+          <text x="182" y="127" font-family="JetBrains Mono,monospace" font-size="14" fill="#4ECDC4" text-anchor="middle" font-weight="700">WOULD</text>
+          <text x="182" y="143" font-family="Inter,sans-serif" font-size="9" fill="#94B4CC" text-anchor="middle">Future in past · Habitual</text>
+          <rect x="245" y="105" width="105" height="50" rx="8" fill="#1E3A5F" stroke="#E07A5F" stroke-width="1"/>
+          <text x="297" y="127" font-family="JetBrains Mono,monospace" font-size="14" fill="#E07A5F" text-anchor="middle" font-weight="700">SHOULD</text>
+          <text x="297" y="143" font-family="Inter,sans-serif" font-size="9" fill="#94B4CC" text-anchor="middle">Duty · Tentative use</text>
+          <rect x="360" y="105" width="105" height="50" rx="8" fill="#1E3A5F" stroke="#9B8EC4" stroke-width="1"/>
+          <text x="412" y="127" font-family="JetBrains Mono,monospace" font-size="15" fill="#9B8EC4" text-anchor="middle" font-weight="700">COULD</text>
+          <text x="412" y="143" font-family="Inter,sans-serif" font-size="9" fill="#94B4CC" text-anchor="middle">Past capacity · Request</text>
+          <rect x="475" y="105" width="105" height="50" rx="8" fill="#1E3A5F" stroke="#FBBF24" stroke-width="1"/>
+          <text x="527" y="127" font-family="JetBrains Mono,monospace" font-size="15" fill="#FBBF24" text-anchor="middle" font-weight="700">MIGHT</text>
+          <text x="527" y="143" font-family="Inter,sans-serif" font-size="9" fill="#94B4CC" text-anchor="middle">Request · Possibility</text>
+          <!-- Modalities bar -->
+          <rect x="15" y="175" width="650" height="70" rx="10" fill="rgba(30,58,95,0.4)" stroke="rgba(78,205,196,0.15)" stroke-width="1"/>
+          <text x="340" y="196" font-family="Inter,sans-serif" font-size="11" fill="#4ECDC4" text-anchor="middle" font-weight="600">MODALITIES (Semantic Categories)</text>
+          <text x="340" y="215" font-family="Inter,sans-serif" font-size="11" fill="#94B4CC" text-anchor="middle">Statement · Question · Request · Ability · Wish · Permission · Possibility</text>
+          <text x="340" y="233" font-family="Inter,sans-serif" font-size="11" fill="#94B4CC" text-anchor="middle">Insistence · Characteristic · Volition · Duty · Obligation · Conclusion</text>
+        </svg>
+        <div class="diagram-caption">Overview of 10 modal verbs and their key semantic categories</div>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-header">WILL <span style="font-size:13px;font-family:Inter,sans-serif;color:var(--text-muted);font-weight:400;">— 7 modalities</span></div>
+        <div class="modal-uses">
+          <div class="modal-use"><div class="modal-use-label">Prediction</div><div class="modal-use-ex">I will get a first class this year.</div></div>
+          <div class="modal-use"><div class="modal-use-label">Willingness</div><div class="modal-use-ex">I will help you.</div></div>
+          <div class="modal-use"><div class="modal-use-label">Request</div><div class="modal-use-ex">Will you get me a pen?</div></div>
+          <div class="modal-use"><div class="modal-use-label">General Facts</div><div class="modal-use-ex">Oil will float on water.</div></div>
+          <div class="modal-use"><div class="modal-use-label">Characteristic</div><div class="modal-use-ex">He will do anything for money.</div></div>
+          <div class="modal-use"><div class="modal-use-label">Probability</div><div class="modal-use-ex">Veni will be in her office now.</div></div>
+          <div class="modal-use"><div class="modal-use-label">Insistence</div><div class="modal-use-ex">He will buy this book.</div></div>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-header">SHALL <span style="font-size:13px;font-family:Inter,sans-serif;color:var(--text-muted);font-weight:400;">— 5 modalities</span></div>
+        <div class="modal-uses">
+          <div class="modal-use"><div class="modal-use-label">Prediction</div><div class="modal-use-ex">I shall see that movie today.</div></div>
+          <div class="modal-use"><div class="modal-use-label">Promise</div><div class="modal-use-ex">I shall return this book to you.</div></div>
+          <div class="modal-use"><div class="modal-use-label">Suggestion</div><div class="modal-use-ex">Shall we make a move?</div></div>
+          <div class="modal-use"><div class="modal-use-label">Volition</div><div class="modal-use-ex">Shall I make some snacks?</div></div>
+          <div class="modal-use"><div class="modal-use-label">Insistence</div><div class="modal-use-ex">He shall be taught a lesson.</div></div>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-header" style="border-left-color:#E07A5F;background:rgba(224,122,95,0.08);">CAN <span style="font-size:13px;font-family:Inter,sans-serif;color:var(--text-muted);font-weight:400;">— 7 modalities</span></div>
+        <div class="modal-uses">
+          <div class="modal-use"><div class="modal-use-label">Capability</div><div class="modal-use-ex">I can speak Russian.</div></div>
+          <div class="modal-use"><div class="modal-use-label">Permission</div><div class="modal-use-ex">You can leave now.</div></div>
+          <div class="modal-use"><div class="modal-use-label">Request</div><div class="modal-use-ex">Can you pass the Bill?</div></div>
+          <div class="modal-use"><div class="modal-use-label">Req. for Permission</div><div class="modal-use-ex">Can I eat some more ice cream?</div></div>
+          <div class="modal-use"><div class="modal-use-label">Characteristics</div><div class="modal-use-ex">Rukmani can talk anything.</div></div>
+          <div class="modal-use"><div class="modal-use-label">Possibility</div><div class="modal-use-ex">He can be in the faculty club.</div></div>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-header" style="border-left-color:#9B8EC4;background:rgba(155,142,196,0.08);">MAY / COULD / MIGHT / WOULD / SHOULD / OUGHT TO</div>
+        <div class="modal-uses">
+          <div class="modal-use"><div class="modal-use-label">MAY — Permission</div><div class="modal-use-ex">You may proceed now.</div></div>
+          <div class="modal-use"><div class="modal-use-label">MAY — Benediction</div><div class="modal-use-ex">May you touch greater heights!</div></div>
+          <div class="modal-use"><div class="modal-use-label">MAY — Malediction</div><div class="modal-use-ex">May that plunderer be punished!</div></div>
+          <div class="modal-use"><div class="modal-use-label">COULD — Past Capacity</div><div class="modal-use-ex">He could play tennis for hours when young.</div></div>
+          <div class="modal-use"><div class="modal-use-label">COULD — Request</div><div class="modal-use-ex">Could you carry these few books for me?</div></div>
+          <div class="modal-use"><div class="modal-use-label">MIGHT — Possibility</div><div class="modal-use-ex">She might be working still.</div></div>
+          <div class="modal-use"><div class="modal-use-label">WOULD — Future in Past</div><div class="modal-use-ex">He said he would do this work for me.</div></div>
+          <div class="modal-use"><div class="modal-use-label">SHOULD — Duty</div><div class="modal-use-ex">You should finish their task by Monday.</div></div>
+          <div class="modal-use"><div class="modal-use-label">OUGHT TO — Duty</div><div class="modal-use-ex">I ought to meet the principal.</div></div>
+          <div class="modal-use"><div class="modal-use-label">MUST — Obligation</div><div class="modal-use-ex">He must listen to what I say.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- PHONETICS -->
+    <section class="section" id="phonetics">
+      <div class="section-header">
+        <div class="section-letter">🔊</div>
+        <div>
+          <div class="section-title">Phonemic &amp; Phonetic Transcription</div>
+          <div class="section-subtitle">Representing pronunciation with symbols</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">📖 Phonemic Transcription</div>
+          <div class="card-body">
+            Also called <strong>broad phonetic transcription</strong>. Represents pronunciation using <strong>sound units (phonemes)</strong> without showing distinct variations. Symbols are enclosed in <strong>slant lines ( // )</strong>.<br><br>
+            RP (Received Pronunciation) contains <strong>44 phonemes</strong>.
+          </div>
+          <div class="phoneme-box">/bɪkʌm/ — 'Become' (phonemic)</div>
+        </div>
+        <div class="card">
+          <div class="card-title">📖 Phonetic Transcription</div>
+          <div class="card-body">
+            Also called <strong>narrow phonetic transcription</strong>. Indicates precise phonetic quality using <strong>diacritics and special marks</strong>. Shows both quality and quantity. Symbols (allophones) are enclosed in <strong>square brackets [ ]</strong>.
+          </div>
+          <div class="phoneme-box">[bikɔ̂m] — 'Become' (phonetic/narrow)</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <div class="card-title">📋 Key Differences</div>
+        <table class="change-table">
+          <thead><tr><th>Aspect</th><th>Phonemic</th><th>Phonetic (Narrow)</th></tr></thead>
+          <tbody>
+            <tr><td>Brackets</td><td style="color:var(--mint)">/slant lines/</td><td style="color:var(--gold)">[square brackets]</td></tr>
+            <tr><td>Detail level</td><td style="color:var(--text-muted)">Broad — phoneme level</td><td style="color:var(--text-muted)">Narrow — allophone level</td></tr>
+            <tr><td>Shows variations</td><td style="color:var(--text-muted)">No</td><td style="color:var(--text-muted)">Yes — diacritics used</td></tr>
+            <tr><td>Example: p in "pin"</td><td style="color:var(--mint)">/p/</td><td style="color:var(--gold)">[pʰ] (aspirated)</td></tr>
+            <tr><td>Example: p in "speak"</td><td style="color:var(--mint)">/p/</td><td style="color:var(--gold)">[p] (unaspirated)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- TECHNICAL TERMS -->
+    <section class="section" id="technical">
+      <div class="section-header">
+        <div class="section-letter">⚙️</div>
+        <div>
+          <div class="section-title">17.5 Technical Terms &amp; Their Meanings</div>
+          <div class="section-subtitle">Selected A–Z glossary of scientific and engineering vocabulary</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="border-radius:8px;overflow:hidden;">
+          <div class="tech-item"><span class="tech-term">Aberration</span><div class="tech-def">A disturbance of the rays of a pencil of light such that they can no longer be brought to a sharp focus or form a clear image.</div></div>
+          <div class="tech-item"><span class="tech-term">Acceleration</span><span class="tech-field">Mech.</span><div class="tech-def">The rate at which the velocity of a moving body increases.</div></div>
+          <div class="tech-item"><span class="tech-term">Acoustics</span><span class="tech-field">Phys.</span><div class="tech-def">The science of sound; the study of the effects of sound upon the ear.</div></div>
+          <div class="tech-item"><span class="tech-term">Aerodynamics</span><span class="tech-field">Aero.</span><div class="tech-def">The branch of science which treats of the motion of air and other gaseous fluids, and of the forces on solids moving in such fluids.</div></div>
+          <div class="tech-item"><span class="tech-term">Ampere</span><span class="tech-field">Elec.</span><div class="tech-def">The unit of measurement of electric current strength. A compressor of one volt will force one ampere through a resistance of one ohm.</div></div>
+          <div class="tech-item"><span class="tech-term">Antibiotic</span><span class="tech-field">Chem.</span><div class="tech-def">A mold or fungus which kills, retards, or completely represses the growth of other organisms, usually without harming higher orders of life.</div></div>
+          <div class="tech-item"><span class="tech-term">Atom</span><div class="tech-def">The smallest particle of an element that takes part in a chemical change. It has a nucleus of positive charges called "protons" and revolving negative charges called "electrons."</div></div>
+          <div class="tech-item"><span class="tech-term">Battery</span><span class="tech-field">Elec.</span><div class="tech-def">A number of primary or storage cells, condensers, or dynamos grouped together as a single source of electricity.</div></div>
+          <div class="tech-item"><span class="tech-term">Chain reaction</span><div class="tech-def">A self-sustaining reaction in which the fission of nuclei produces particles that cause the fission of other nuclei.</div></div>
+          <div class="tech-item"><span class="tech-term">Compact Disc (CD)</span><div class="tech-def">A relatively new type of disc record which needs a special player. The disc is reflective and is read by a laser. The sound is recorded in digital pulses.</div></div>
+          <div class="tech-item"><span class="tech-term">Diesel engine</span><div class="tech-def">An internal-combustion engine of high efficiency, in which high temperature is obtained through compression; the oil is ignited by the heat developed.</div></div>
+          <div class="tech-item"><span class="tech-term">Electronics</span><span class="tech-field">Elec.</span><div class="tech-def">The science which deals with free electrons, the means of setting them free, their motions when free, and the effects they can produce.</div></div>
+          <div class="tech-item"><span class="tech-term">Horsepower</span><div class="tech-def">In mechanics, the standard unit by which power is measured. One horsepower is equivalent to 33,000 pounds lifted one foot in one minute.</div></div>
+          <div class="tech-item"><span class="tech-term">LASER</span><div class="tech-def">Light Amplification by Stimulated Emission of Radiation.</div></div>
+          <div class="tech-item"><span class="tech-term">Newton's Laws of Motion</span><span class="tech-field">Phys.</span><div class="tech-def"><strong>1st:</strong> Every body continues in a state of rest or uniform motion unless compelled. <strong>2nd:</strong> Force equals mass × acceleration. <strong>3rd:</strong> To every action there is an equal and opposite reaction.</div></div>
+          <div class="tech-item"><span class="tech-term">Ohm's Law</span><span class="tech-field">Elec.</span><div class="tech-def">The current flowing in a circuit is proportional to the e.m.f. and inversely proportional to the resistance. I = E/R; R = E/I; E = IR</div></div>
+          <div class="tech-item"><span class="tech-term">RAM</span><div class="tech-def">Random Access Memory — a microchip which can temporarily store digital signals fed in by the user.</div></div>
+          <div class="tech-item"><span class="tech-term">ROM</span><div class="tech-def">Read Only Memory — a microchip circuit which permanently stores digital signals loaded in by the manufacturer.</div></div>
+          <div class="tech-item"><span class="tech-term">Wavelength</span><span class="tech-field">Elec.</span><div class="tech-def">The length in meters of one complete sine wave of an alternating current. In radio, the distance in meters between the maximum points of two successive magnetic waves.</div></div>
+          <div class="tech-item"><span class="tech-term">X-Ray</span><div class="tech-def">Similar to gamma rays, highly penetrating radiation. Not from the nucleus but from surrounding electrons. These rays pass through most objects. Used to photograph shadows of bones and interior organs.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <div style="margin-top:64px;padding:32px;background:rgba(10,22,40,0.5);border-radius:16px;border:1px solid var(--border);text-align:center;">
+      <div style="font-size:28px;margin-bottom:8px;">🎓</div>
+      <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--gold);margin-bottom:6px;">ScholarNest</div>
+      <div style="font-size:12px;color:var(--text-muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;">Learn · Grow · Excel</div>
+      <div style="font-size:13px;color:var(--text-muted);">Chapter 17 — Grammar | An Approach to Communication Skills</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:6px;opacity:0.6;">Complete chapter notes with diagrams, tables, and examples</div>
+    </div>
+
+  </div><!-- /content -->
+</main>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = h.scrollTop / (h.scrollHeight - h.clientHeight);
+    document.getElementById('progressBar').style.transform = `scaleX(${pct})`;
+  });
+
+  // Active nav link
+  const sections = document.querySelectorAll('.section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.nav-link[href="#${e.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
